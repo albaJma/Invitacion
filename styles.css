@@ -208,9 +208,9 @@ body {
 
 @media (max-width: 600px) {
     .decorative-image {
-        bottom: 100px; /* Ajustar la posición vertical en pantallas pequeñas */
-        left: 10px; /* Mover a la izquierda en pantallas pequeñas */
-        width: 150px; /* Aumentar el tamaño de la imagen en pantallas pequeñas */
+        bottom: 70px; /* Ajustar la posición vertical en pantallas pequeñas */
+        left: 1px; /* Mover a la izquierda en pantallas pequeñas */
+        width: 95px; /* Aumentar el tamaño de la imagen en pantallas pequeñas */
     }
 }
 
@@ -252,8 +252,8 @@ body {
 
     .decorative-container {
         bottom: 100px; /* Subir más la imagen en pantallas pequeñas */
-        width: 150px; /* Aumentar el tamaño del contenedor en pantallas pequeñas */
-        height: 200px;
+        width: 50px; /* Aumentar el tamaño del contenedor en pantallas pequeñas */
+        height: 300px;
     }
 
     .balloon {
