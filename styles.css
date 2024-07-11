@@ -208,7 +208,7 @@ body {
 
 @media (max-width: 600px) {
     .decorative-image {
-        bottom: 120px; /* Ajustar la posición vertical en pantallas pequeñas */
+        bottom: 110px; /* Ajustar la posición vertical en pantallas pequeñas */
         left: 1px; /* Mover a la izquierda en pantallas pequeñas */
         width: 95px; /* Aumentar el tamaño de la imagen en pantallas pequeñas */
     }
