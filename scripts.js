@@ -57,7 +57,7 @@ document.getElementById('attend-button').addEventListener('click', function() {
 });
 
 document.getElementById('yes-button').addEventListener('click', function() {
-    document.getElementById('response-message').textContent = '¡Gracias! Te esperamos con muchas ganas.';
+    document.getElementById('response-message').textContent = '¡Gracias! Te esperamos';
     document.getElementById('rsvp-options').classList.add('hidden');
     setTimeout(() => {
         document.getElementById('response-message').textContent = '';
