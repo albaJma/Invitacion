@@ -186,7 +186,7 @@ body {
 
 .decorative-container {
     position: absolute;
-    bottom: 120px; /* Subir más la imagen */
+    bottom: 140px; /* Subir más la imagen */
     right: 10px;
     width: 200px; /* Aumentar el tamaño del contenedor */
     height: 300px;
