@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kafen - Cafetería Mexicana</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="Captura de pantalla 2024-11-01 a la(s) 11.26.13 a.m..png" type="image/png">
+    
+   <style>
+        /* Configuración general de la tipografía */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body, html {
+            color: #4A302B;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        main {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+            
+        }
+
+        /* Fondo de día de muertos */
+        .background-de-muertos {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('fondo-dia-de-muertos.webp');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            z-index: -1;
+        }
+
+        /* Menú de navegación fijo */
+        nav {
+            background-color: #4A302B;
+            padding: 1rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        nav a {
+            color: #FFF;
+            text-decoration: none;
+            margin: 0 1.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #DA7635;
+        }
+
+        .menu-icon {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #FFF;
+        }
+
+        .nav-links {
+            display: flex;
+        }
+
+        .show {
+            display: flex;
+        }
+
+        /* Contenedor central */
+        .container-center {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Sección de bienvenida "Nosotros" */
+        .section-initial {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            color: #FFF;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .section-initial h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .section-initial p {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        /* Secciones */
+        .section {
+            display: none;
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #DA7635;
+            margin-bottom: 1.5rem;
+        }
+ /* Estilos para la sección de introducción */
+ .intro-section {
+            display: grid;
+            gap: 1.5rem;
+            text-align: left;
+            color: #4A302B;
+            background-color: #f9f5f0;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .intro-history, .intro-description, .intro-mission, .intro-vision, .intro-values {
+            margin-top: 1rem;
+        }
+
+        .intro-section h3 {
+            font-size: 1.5rem;
+            color: #DA7635;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .history-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .history-image {
+            width: 350px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        /* Estilos del Menú y Productos */
+        .menu-list, .product-list {
+            background-color: #f9f5f0;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 1rem;
+        }
+
+        .menu-item, .product-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px dashed #DA7635;
+            font-weight: 500;
+            color: #4A302B;
+        }
+
+        .menu-item .price, .product-item .price {
+            font-weight: 600;
+            color: #DA7635;
+        }
+
+        .menu-description, .product-description {
+            font-size: 0.9rem;
+            color: #7A5841;
+            margin: 1rem 0;
+            text-align: left;
+        }
+
+        /* Carrusel */
+        .carousel {
+            position: relative;
+            max-width: 300px;
+            margin: 2rem auto;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel img {
+            width: 100%;
+            display: none;
+            height: auto;
+        }
+
+        .carousel img.active {
+            display: block;
+        }
+
+        .carousel .prev, .carousel .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: #FFF;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .carousel .prev {
+            left: 10px;
+        }
+
+        .carousel .next {
+            right: 10px;
+        }
+        .logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.logo-container img {
+    max-width: 150px; /* Ajusta el tamaño según tus necesidades */
+    height: auto;
+    border-radius: 8px; /* Opcional: para darle un borde redondeado */
+}
+.about-image {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0;
+    
+}
+
+.about-image img {
+    max-width: 30%;
+    height: auto;
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
+}
+
+
+
+        /* Contacto */
+        .contact-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .map-container, .typeform-embed {
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-media {
+            display: flex;
+            gap: 1rem;
+            font-size: 1.8rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .social-media a {
+            color: #DA7635;
+            transition: color 0.3s;
+        }
+
+        .social-media a:hover {
+            color: #BF6028;
+        }
+
+        /* Pie de página */
+        footer {
+            background-color: #4A302B;
+            color: #FFF;
+            text-align: center;
+            padding: 1rem;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Responsividad */
+        @media (max-width: 768px) {
+            .menu-icon {
+                display: block;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                background-color: #4A302B;
+                width: 100%;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                padding: 1rem;
+            }
+            .nav-links.show {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fondo Parallax -->
+    <div class="background-de-muertos"></div>
+
+    <!-- Menú de navegación fijo -->
+    <nav>
+        <span class="menu-icon" onclick="toggleMenu()">☰</span>
+        <div class="nav-links" id="navLinks">
+            <a href="javascript:void(0);" onclick="navigateTo('nosotros')">Introducción</a>
+            <a href="javascript:void(0);" onclick="navigateTo('introduccion')">Nosotros</a>
+            <a href="javascript:void(0);" onclick="navigateTo('menu')">Menú</a>
+            <a href="javascript:void(0);" onclick="navigateTo('productos')">Productos</a>
+            <a href="javascript:void(0);" onclick="navigateTo('contacto')">Contactanos</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Sección de bienvenida "Nosotros" centrada -->
+        <div id="nosotros" class="section section-initial active">
+           <!-- Logo de Kafen -->
+           <div class="logo-container">
+            <img src="image.png" alt="Logo de Kafen" />
+        </div>
+    
+        <h1>Kafen</h1>
+        <p>Descubre la mejor experiencia en café mexicano, inspirado en la tradición y la cultura de México.</p>
+        <p>Bienvenidos a Kafen, donde cada sorbo cuenta una historia.</p>
+    
+        <!-- Imagen de Historia -->
+        <div class="about-image">
+            <img src="ka.webp" alt="Imagen de la historia de Kafen" style="margin-right: 2%;" /> 
+            <img src="ka2.webp" alt="Imagen de la historia de Kafen" />
+        </div>
+        </div>
+
+        
+        
+        <!-- Sección de Introducción -->
+        <div id="introduccion" class="section">
+            <div class="container-center">
+                <h2>Nosotros</h2>
+                <div class="intro-section">
+                    <!-- Historia -->
+                    <div class="intro-history">
+                        <h3>Historia</h3>
+                        <div class="history-content">
+                            <img src="his.webp" alt="Imagen de la historia de Kafen" class="history-image">
+                            <p>Fundado en 1988 en la Ciudad de Oaxaca por Doña Mechita García y Don Jacinto de la Cruz, Kafé comenzó como un pequeño puesto que ofrecía el emblemático “Café con piquete” – café con mezcal – a trabajadores locales, convirtiéndose en un símbolo de tradición.</p>
+                            
+                        </div>
+                        <p>Cada taza de café es una experiencia auténtica que conecta a nuestros clientes con las raíces culturales de Oaxaca, especialmente a través de nuestra bebida emblemática, el “Café ahumado”.</p>
+                    </div>
+                    
+                    <!-- Descripción -->
+                    <div class="intro-description">
+                        <h3>Descripción</h3>
+                        <p>Kafen es una empresa mexicana que honra las costumbres y raíces oaxaqueñas, ofreciendo una amplia variedad de bebidas que fusionan innovación y tradición para satisfacer a los paladares más exigentes.</p>
+                    </div>
+
+                    <!-- Misión -->
+                    <div class="intro-mission">
+                        <h3>Misión</h3>
+                        <p>Brindar café de calidad, con un sabor y aroma exquisitos, creando una experiencia única y apoyando al desarrollo de la comunidad.</p>
+                    </div>
+
+                    <!-- Visión -->
+                    <div class="intro-vision">
+                        <h3>Visión</h3>
+                        <p>Ser reconocidos a nivel nacional por nuestra calidad y el compromiso con nuestros clientes, preservando la autenticidad de cada grano de café.</p>
+                    </div>
+
+                    <!-- Valores -->
+                    <div class="intro-values">
+                        <h3>Valores</h3>
+                        <p>Identidad, Responsabilidad Social, Carisma, Generosidad, Calidez, Bien Común, Respeto e Inclusión, Empatía, Lealtad, Sostenibilidad.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Sección de Menú -->
+        <div id="menu" class="section">
+            <div class="container-center">
+                <h2>Menú de Kafen</h2>
+                <p class="menu-description">Disfruta de una selección especial de cafés de distintas regiones de México.</p>
+                
+                <div class="menu-list">
+                    <div class="menu-item">
+                        <span>Café Solito</span><span class="price">$35</span>
+                    </div>
+                    <div class="menu-item">
+                        <span>Dulce Cafecito</span><span class="price">$35</span>
+                    </div>
+                    <div class="menu-item">
+                        <span>Café Canela</span><span class="price">$40</span>
+                    </div>
+                    <div class="menu-item">
+                        <span>Champagcafé</span><span class="price">$42</span>
+                    </div>
+                    <div class="menu-item">
+                        <span>Café de Olla</span><span class="price">$40</span>
+                    </div>
+                    <div class="menu-item">
+                        <span>Café Ahumado</span><span class="price">$40</span>
+                    </div>
+                    <p class="menu-description">* Con piquete (añade $20)</p>
+                    <p class="menu-description" style="font-size: large;">¿Quieres ordenenar?,  <a href="https://kafen.dev.pidedirecto.mx/ordenar">ingresa aqui</a></p>
+
+                </div>
+
+                <!-- Carrusel de Menú -->
+                <div class="carousel" id="menu-carousel">
+                    <img src="DALL·E 2024-11-08 02.09.53 - A realistic, high-quality image of 'Café Solito,' a simple, traditional black coffee served in a small, rustic ceramic cup. The coffee is dark and ric.webp" class="active" alt="Café Solito - Oaxaca, $35">
+                    <img src="DALL·E 2024-11-08 02.09.05 - A realistic, high-quality image of 'Dulce Cafecito,' a sweet, traditional Mexican coffee drink served in a charming ceramic cup. The coffee has a foam.webp" alt="Café Solito - Veracruz, $35">
+                    <img src="DALL·E 2024-11-08 02.10.37 - A realistic, high-quality image of 'Café Canela,' a warm, spiced coffee flavored with cinnamon, served in a ceramic cup. The coffee has a sprinkle of .webp" alt="Café Solito - Veracruz, $35">
+                    <img src="DALL·E 2024-11-08 02.07.29 - A realistic, high-quality image of 'Champagcafé,' a unique coffee beverage infused with champagne, served in a stylish glass with a foamy top. The dri.webp" alt="Café Solito - Veracruz, $35">
+                    <img src="DALL·E 2024-11-08 02.14.50 - A realistic, high-quality image of 'Café de Olla,' a traditional Mexican coffee served in a rustic clay pot with a hint of cinnamon stick. The coffee .webp" alt="Café Solito - Veracruz, $35">
+                    <img src="DALL·E 2024-11-08 02.13.43 - A realistic, high-quality image of 'Café Ahumado,' a rich coffee with a smoky flavor, served in a rustic ceramic cup with visible steam. The cup has s.webp" alt="Café Solito - Veracruz, $35">
+                    <span class="prev" onclick="prevSlide('menu-carousel')">&#10094;</span>
+                    <span class="next" onclick="nextSlide('menu-carousel')">&#10095;</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Productos -->
+        <div id="productos" class="section">
+            <div class="container-center">
+                <h2>Productos</h2>
+                <p class="product-description">Descubre nuestra selección de productos exclusivos.</p>
+                
+                <div class="product-list">
+                    <div class="product-item">
+                        <span>Vaso Decorativo Edición Especial</span><span class="price">$120</span>
+                    </div>
+                    <div class="product-item">
+                        <span>Bolsa de Café Orgánico - Oaxaca (250g)</span><span class="price">$150</span>
+                    </div>
+                    <div class="product-item">
+                        <span>Bolsa</span><span class="price">$150</span>
+                    </div>
+                    <div class="product-item">
+                        <span>Taza de Cerámica Artesanal</span><span class="price">$80</span>
+                    </div>
+                    <div class="product-item">
+                        <span>Llavero</span><span class="price">$80</span>
+                    </div>
+                    <div class="product-item">
+                        <span>Portavasos</span><span class="price">$80</span>
+                    </div>
+                    <p class="menu-description">* Disponible solo en tienda física</p>
+                </div>
+
+                <!-- Carrusel de Productos -->
+                <div class="carousel" id="productos-carousel">
+                    <img src="v1.webp" class="active" alt="Vaso Decorativo Edición Especial, $120">
+                    <img src="cafeor.webp" alt="Bolsa de Café Orgánico - Oaxaca, $150">
+                    <img src="bol1.webp" alt="Vaso Decorativo Edición Especial, $120">
+                    <img src="t1.webp" alt="Vaso Decorativo Edición Especial, $120">
+                    <img src="llaa.webp" alt="Vaso Decorativo Edición Especial, $120">
+                    <img src="p1.webp" alt="Vaso Decorativo Edición Especial, $120">
+                    <span class="prev" onclick="prevSlide('productos-carousel')">&#10094;</span>
+                    <span class="next" onclick="nextSlide('productos-carousel')">&#10095;</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Contacto -->
+        <div id="contacto" class="section">
+            <div class="container-center">
+                <h2>Contactanos</h2>
+                <div class="contact-container">
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15086.450355125595!2d-98.19815730078189!3d19.036785567608998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cfc0bd5ebc7a3b%3A0x48a6461de494ad95!2sPuebla%2C%20Mexico!5e0!3m2!1sen!2sus!4v1730536729784!5m2!1sen!2sus" frameborder="0" style="width: 100%; height: 100%;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                    <div>
+                        <h3>Encuéntranos en redes sociales</h3>
+                        <div class="social-media">
+                            <a href="https://www.facebook.com/kafencafemx/"><i class="fab fa-facebook"></i></a>
+                            <a href="https://www.instagram.com/kafenoax/"><i class="fab fa-instagram"></i></a>
+                            <a href="https://wa.me/qr/DI5LUE3KX3W7G1"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <iframe class="typeform-embed" src="https://v597m31kv3e.typeform.com/to/hlMu5Nd8" frameborder="0" style="width: 100%; height: 300px; margin-top: 2rem;" allowfullscreen></iframe>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Kafen - Cafetería Mexicana. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("navLinks").classList.toggle("show");
+        }
+
+        function navigateTo(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            document.getElementById("navLinks").classList.remove("show");
+        }
+
+        function prevSlide(carouselId) {
+            const images = document.querySelectorAll(`#${carouselId} img`);
+            let activeIndex = Array.from(images).findIndex(img => img.classList.contains('active'));
+            images[activeIndex].classList.remove('active');
+            activeIndex = (activeIndex - 1 + images.length) % images.length;
+            images[activeIndex].classList.add('active');
+        }
+
+        function nextSlide(carouselId) {
+            const images = document.querySelectorAll(`#${carouselId} img`);
+            let activeIndex = Array.from(images).findIndex(img => img.classList.contains('active'));
+            images[activeIndex].classList.remove('active');
+            activeIndex = (activeIndex + 1) % images.length;
+            images[activeIndex].classList.add('active');
+        }
+    </script>
+</body>
+</html>
